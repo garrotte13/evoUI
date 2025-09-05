@@ -1,8 +1,8 @@
-require "evoGUI"
+require "evoUI"
 
-if not evogui then evogui = {} end
+if not EvoUi then EvoUi = {} end
 
-function evogui.log(message)
+function EvoUi.log(message)
     if game then
         for i, p in pairs(game.players) do
             p.print(message)
@@ -13,7 +13,7 @@ function evogui.log(message)
 end
 
 
-function evogui.format_number(n) -- credit http://richard.warburton.it
+function EvoUi.format_number(n) -- credit http://richard.warburton.it
     local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
     return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
 end
@@ -34,7 +34,7 @@ local octant_names = {
     [7] = {"direction.northeast"},
 }
 
-function evogui.get_octant_name(vector)
+function EvoUi.get_octant_name(vector)
     local radians = math.atan2(vector.y, vector.x)
     local octant = math.floor( 8 * radians / (2*math.pi) + 8.5 ) % 8
 
@@ -42,32 +42,32 @@ function evogui.get_octant_name(vector)
 end
 
 
-script.on_init(evogui.mod_init)
-script.on_configuration_changed(evogui.mod_update)
+script.on_init(EvoUi.mod_init)
+script.on_configuration_changed(EvoUi.mod_update)
 
 script.on_event(defines.events.on_player_created, function(event)
-    local status, err = pcall(evogui.new_player, event)
-    if err then evogui.log({"err_generic", "on_player_created", err}) end
+    local status, err = pcall(EvoUi.new_player, event)
+    if err then EvoUi.log({"err_generic", "on_player_created", err}) end
 end)
 
 script.on_event(defines.events.on_tick, function(event)
     local status, err = pcall(RemoteSensor.initialize)
-    if err then evogui.log({"err_generic", "on_tick:remote_initialize", err}) end
-    local status, err = pcall(evogui.update_gui, event)
-    if err then evogui.log({"err_generic", "on_tick:update_gui", err}) end
+    if err then EvoUi.log({"err_generic", "on_tick:remote_initialize", err}) end
+    local status, err = pcall(EvoUi.update_gui, event)
+    if err then EvoUi.log({"err_generic", "on_tick:update_gui", err}) end
 end)
 
 local last_clicked = nil
 local last_checked = nil
 
 local function raise_on_click(event)
-    local status, err = pcall(evogui.on_gui_click, event)
+    local status, err = pcall(EvoUi.on_gui_click, event)
 
     if err then
         if event.element.valid then
-            evogui.log({"err_specific", "on_gui_click", event.element.name, err})
+            EvoUi.log({"err_specific", "on_gui_click", event.element.name, err})
         else
-            evogui.log({"err_generic", "on_gui_click", err})
+            EvoUi.log({"err_generic", "on_gui_click", err})
         end
     end
 end

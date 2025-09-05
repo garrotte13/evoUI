@@ -47,26 +47,26 @@ end
 
 function sensor:settings_gui(player_index)
     local player = game.players[player_index]
-    local sensor_settings = global.evogui[player.name].sensor_settings[self.name]
+    local sensor_settings = storage.EvoUi[player.name].sensor_settings[self.name]
     local root_name = self:settings_root_name()
 
     local root = player.gui.center.add{type="frame",
                                        name=root_name,
                                        direction="vertical",
                                        caption={"sensor.play_time.settings.title"}}
-    root.add{type="checkbox", name="evogui_sensor_play_time_checkbox_show_days",
+    root.add{type="checkbox", name="EvoUi_sensor_play_time_checkbox_show_days",
              caption={"sensor.play_time.settings.show_days"},
              state=sensor_settings.show_days}
 
-    root.add{type="checkbox", name="evogui_sensor_play_time_checkbox_show_seconds",
+    root.add{type="checkbox", name="EvoUi_sensor_play_time_checkbox_show_seconds",
              caption={"sensor.play_time.settings.show_seconds"},
              state=sensor_settings.show_seconds}
 
-    root.add{type="checkbox", name="evogui_sensor_play_time_checkbox_show_personal_time",
+    root.add{type="checkbox", name="EvoUi_sensor_play_time_checkbox_show_personal_time",
              caption={"sensor.play_time.settings.show_personal_time"},
              state=sensor_settings.show_personal_time or false}
 
-    root.add{type="button", name="evogui_sensor_play_time_close", caption={"settings_close"}}
+    root.add{type="button", name="EvoUi_sensor_play_time_close", caption={"settings_close"}}
 end
 
 

@@ -18,12 +18,12 @@ function RemoteSensor.new(sensor_data)
     end
 
     ValueSensor.register(sensor)
-    if not global.remote_sensors then
-        global.remote_sensors = {}
+    if not storage.remote_sensors then
+        storage.remote_sensors = {}
     end
 
     -- store sensor data for global serialization
-    global.remote_sensors[sensor_data.name] = sensor_data
+    storage.remote_sensors[sensor_data.name] = sensor_data
 end
 
 function RemoteSensor.get_by_name(name)
@@ -36,8 +36,8 @@ function RemoteSensor.initialize()
     if remote_initialized then return end
 
      -- Initialize any remote sensors that were previously saved
-    if global.remote_sensors then
-        for _, sensor_data in pairs(global.remote_sensors) do
+    if storage.remote_sensors then
+        for _, sensor_data in pairs(storage.remote_sensors) do
             if not RemoteSensor.get_by_name(sensor_data.name) then
                 RemoteSensor.new(sensor_data)
             end

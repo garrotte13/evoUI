@@ -1,8 +1,8 @@
 
 ValueSensor = {}
 
-if not evogui then evogui = {} end
-if not evogui.value_sensors then evogui.value_sensors = {} end
+if not EvoUi then EvoUi = {} end
+if not EvoUi.value_sensors then EvoUi.value_sensors = {} end
 
 function ValueSensor.new(name)
     local sensor = {
@@ -24,7 +24,7 @@ function ValueSensor.new(name)
 
     function sensor:update_ui(owner)
         local player = game.players[owner.player_index]
-        local sensor_settings = global.evogui[player.name].sensor_settings[self.name]
+        local sensor_settings = storage.EvoUi[player.name].sensor_settings[self.name]
 
         self.settings = sensor_settings
 
@@ -43,8 +43,8 @@ function ValueSensor.new(name)
     end
 
     function sensor:on_click(event)
-        if string.starts_with(event.element.name, "evogui_sensor_" .. self.name .. "_checkbox_") then
-            local len = string.len("evogui_sensor_" .. self.name .. "_checkbox_")
+        if string.starts_with(event.element.name, "EvoUi_sensor_" .. self.name .. "_checkbox_") then
+            local len = string.len("EvoUi_sensor_" .. self.name .. "_checkbox_")
             local function_name = event.element.name:sub(len + 1,-1)
             self[function_name](event)
         else
@@ -66,7 +66,7 @@ function ValueSensor.new(name)
 
         return function(event)
             local player = game.players[event.player_index]
-            local sensor_settings = global.evogui[player.name].sensor_settings[sensor_name]
+            local sensor_settings = storage.EvoUi[player.name].sensor_settings[sensor_name]
 
             sensor_settings[setting_name] = event.element.state
         end
@@ -76,11 +76,11 @@ function ValueSensor.new(name)
 end
 
 function ValueSensor.register(sensor)
-    table.insert(evogui.value_sensors, sensor)
+    table.insert(EvoUi.value_sensors, sensor)
 end
 
 function ValueSensor.get_by_name(sensor_name)
-    for _, sensor in pairs(evogui.value_sensors) do
+    for _, sensor in pairs(EvoUi.value_sensors) do
         if sensor.name == sensor_name then
             return sensor
         end

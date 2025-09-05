@@ -42,22 +42,22 @@ end
 
 function sensor:settings_gui(player_index)
     local player = game.players[player_index]
-    local sensor_settings = global.evogui[player.name].sensor_settings[self.name]
+    local sensor_settings = storage.EvoUi[player.name].sensor_settings[self.name]
     local root_name = self:settings_root_name()
 
     local root = player.gui.center.add{type="frame",
                                        name=root_name,
                                        direction="vertical",
                                        caption={"sensor.day_time.settings.title"}}
-    root.add{type="checkbox", name="evogui_sensor_day_time_checkbox_show_day_number",
+    root.add{type="checkbox", name="EvoUi_sensor_day_time_checkbox_show_day_number",
              caption={"sensor.day_time.settings.show_day_number"},
              state=sensor_settings.show_day_number}
 
-    root.add{type="checkbox", name="evogui_sensor_day_time_checkbox_minute_rounding",
+    root.add{type="checkbox", name="EvoUi_sensor_day_time_checkbox_minute_rounding",
              caption={"sensor.day_time.settings.minute_rounding"},
              state=sensor_settings.minute_rounding}
 
-    root.add{type="button", name="evogui_sensor_day_time_btn_close", caption={"settings_close"}}
+    root.add{type="button", name="EvoUi_sensor_day_time_btn_close", caption={"settings_close"}}
 end
 
 ValueSensor.register(sensor)

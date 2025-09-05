@@ -1,6 +1,6 @@
 require "template"
 
-if not evogui.on_click then evogui.on_click = {} end
+if not EvoUi.on_click then EvoUi.on_click = {} end
 local sensor = ValueSensor.new("player_locations")
 sensor.show_player_index = sensor:make_on_click_checkbox_handler("show_player_index")
 sensor.show_position = sensor:make_on_click_checkbox_handler("show_position")
@@ -14,7 +14,7 @@ function sensor:create_ui(owner)
         local root = owner.add{type="flow",
                                name=self.name,
                                direction="horizontal",
-                               style="EvoGUI_cramped_flow_h"}
+                               style="EvoUi_cramped_flow_h"}
 
         root.add{type="label", caption={self.format_key}}
         root.add{type="table", name="player_list", column_count=1}
@@ -24,34 +24,34 @@ end
 
 function sensor:settings_gui(player_index)
     local player = game.players[player_index]
-    local sensor_settings = global.evogui[player.name].sensor_settings[self.name]
+    local sensor_settings = storage.EvoUi[player.name].sensor_settings[self.name]
     local root_name = self:settings_root_name()
 
     local root = player.gui.center.add{type="frame",
                                        name=root_name,
                                        direction="vertical",
                                        caption={"sensor.player_locations.settings.title"}}
-    root.add{type="checkbox", name="evogui_sensor_player_locations_checkbox_show_player_index",
+    root.add{type="checkbox", name="EvoUi_sensor_player_locations_checkbox_show_player_index",
              caption={"sensor.player_locations.settings.show_player_index"},
              state=sensor_settings.show_player_index}
 
-    root.add{type="checkbox", name="evogui_sensor_player_locations_checkbox_show_position",
+    root.add{type="checkbox", name="EvoUi_sensor_player_locations_checkbox_show_position",
              caption={"sensor.player_locations.settings.show_position"},
              state=sensor_settings.show_position}
 
-    root.add{type="checkbox", name="evogui_sensor_player_locations_checkbox_show_surface",
+    root.add{type="checkbox", name="EvoUi_sensor_player_locations_checkbox_show_surface",
              caption={"sensor.player_locations.settings.show_surface"},
              state=sensor_settings.show_surface}
 
-    root.add{type="checkbox", name="evogui_sensor_player_locations_checkbox_show_direction",
+    root.add{type="checkbox", name="EvoUi_sensor_player_locations_checkbox_show_direction",
              caption={"sensor.player_locations.settings.show_direction"},
              state=sensor_settings.show_direction}
 
-    root.add{type="checkbox", name="evogui_sensor_player_locations_checkbox_show_offline",
+    root.add{type="checkbox", name="EvoUi_sensor_player_locations_checkbox_show_offline",
              caption={"sensor.player_locations.settings.show_offline"},
              state=sensor_settings.show_offline}
 
-    root.add{type="button", name="evogui_sensor_player_locations_close", caption={"settings_close"}}
+    root.add{type="button", name="EvoUi_sensor_player_locations_close", caption={"settings_close"}}
 end
 
 local function directions(source, destination)
@@ -63,7 +63,7 @@ local function directions(source, destination)
 
     if math.abs(delta_x) < 2 and math.abs(delta_y) < 2 then return '' end
 
-    return evogui.get_octant_name{x=delta_x, y=delta_y}
+    return EvoUi.get_octant_name{x=delta_x, y=delta_y}
 end
 
 
@@ -90,7 +90,7 @@ end
 
 function sensor:update_ui(owner)
     local player = game.players[owner.player_index]
-    local sensor_settings = global.evogui[player.name].sensor_settings[self.name]
+    local sensor_settings = storage.EvoUi[player.name].sensor_settings[self.name]
     local gui_list = owner[self.name].player_list
 
     for _, p in pairs(game.players) do
