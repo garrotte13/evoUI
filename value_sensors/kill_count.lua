@@ -22,6 +22,10 @@ local entity_types = {
     ["unit-spawner"] = {
         ["biter-spawner"] = true,
         ["spitter-spawner"] = true,
+        ["bob-0-biter-spawner"] = true,
+        ["bob-0-spitter-spawner"] = true,
+        ["bob-biter-spawner"] = true,
+        ["bob-spitter-spawner"] = true,
         ["armoured-biter-spawner"] = true, --ArmouredBiters spawner
     },
 }
@@ -36,7 +40,7 @@ local function is_entity_type(what_type, entity_name)
         return type_cache[entity_name]
     end
 
-    local prototype = game.entity_prototypes[entity_name]
+    local prototype = prototypes.entity[entity_name]
     if prototype and prototype.type == what_type then
         type_cache[entity_name] = true
     else
